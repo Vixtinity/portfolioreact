@@ -1,15 +1,32 @@
+// src/components/Header.tsx
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { Link } from "react-router";
 
 interface HeaderProps {
   titulo: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ titulo }) => {
+const Header: React.FC<HeaderProps> = () => {
+  const pagina = useLocation();
+
+  let titulo = '';
+
+  if (pagina.pathname === '/habilidad') {
+    titulo = 'Habilidades';
+  } else if (location.pathname === '/proyectos') {
+    titulo = 'Proyectos';
+  } else if (location.pathname === '/contacto') {
+    titulo = 'Contacto';
+  } else {
+    titulo = '¿Quién soy?';
+  }
+
   return (
     <header className="bg-custom">
       <div className="text-center py-20">
         <h1
-          className="text-white m-0 py-3 border-radi"
+          className="text-white py-3 rounded-xl"
           style={{
             fontFamily: "'Arial', sans-serif",
             fontSize: '3rem',
@@ -23,72 +40,70 @@ const Header: React.FC<HeaderProps> = ({ titulo }) => {
         </h1>
       </div>
 
-      {/* Menu PC */}
-      <nav className="navbar navbar-expand-lg bg-custom d-none d-lg-block" id="bootstrapmenu">
-        <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav mx-auto">
-              <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="/">
-                  ¿Quién soy?
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/habilidad">
-                  Habilidades
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/proyectos">
-                  Proyectos
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/contacto">
-                  Contacto
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+      {/* Menú grande (pantallas grandes) */}
+      <nav className="hidden lg:flex justify-center bg-custom py-4">
+        <ul className="flex space-x-10">
+          <li>
+            <Link to="/"
+              className={`text-white hover:text-gray-300 transition ${location.pathname === '/' ? 'text-gray-300' : ''}`}
+            >
+              ¿Quién soy?
+            </Link>
+          </li>
+          <li>
+            <Link to= "/habilidad"
+              className={`text-white hover:text-gray-300 transition ${location.pathname === '/habilidad' ? 'text-gray-300' : ''}`}
+            >
+              Habilidades
+            </Link>
+          </li>
+          <li>
+            <Link to="/proyectos"
+              className={`text-white hover:text-gray-300 transition ${location.pathname === '/proyectos' ? 'text-gray-300' : ''}`}
+            >
+              Proyectos
+            </Link>
+          </li>
+          <li>
+            <Link to="/contacto"
+              className={`text-white hover:text-gray-300 transition ${location.pathname === '/contacto' ? 'text-gray-300' : ''}`}
+            >
+              Contacto
+            </Link>
+          </li>
+        </ul>
       </nav>
 
-      {/* Menu móvil */}
-      <div className="hamburger-menu d-lg-none">
-        <input id="menu__toggle" type="checkbox" />
-        <label className="menu__btn" htmlFor="menu__toggle">
-          <span></span>
+      {/* Menú móvil */}
+      <div className="lg:hidden px-4 pb-6">
+        <input id="menu__toggle" type="checkbox" className="hidden peer" />
+        <label
+          htmlFor="menu__toggle"
+          className="block cursor-pointer w-8 h-6 relative"
+        >
+          <span className="block w-full h-1 bg-white absolute top-0 transition duration-300"></span>
+          <span className="block w-full h-1 bg-white absolute top-2 transition duration-300"></span>
+          <span className="block w-full h-1 bg-white absolute top-4 transition duration-300"></span>
         </label>
 
-        <ul className="menu__box">
+        <ul className="peer-checked:block hidden mt-4 space-y-4 bg-custom p-4 rounded-md shadow-md">
           <li>
-            <a className="menu__item" href="/index">
+            <a href="/" className="block text-white hover:text-gray-300">
               ¿Quién soy?
             </a>
           </li>
           <li>
-            <a className="menu__item" href="/habilidad">
+            <a href="/habilidad" className="block text-white hover:text-gray-300">
               Habilidades
             </a>
           </li>
           <li>
-            <a className="menu__item" href="/proyectos">
+            <a href="/proyectos" className="block text-white hover:text-gray-300">
               Proyectos
             </a>
           </li>
           <li>
-            <a className="menu__item" href="/contacto">
+            <a href="/contacto" className="block text-white hover:text-gray-300">
               Contacto
             </a>
           </li>

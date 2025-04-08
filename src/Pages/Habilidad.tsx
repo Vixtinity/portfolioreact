@@ -6,11 +6,11 @@ import Footer from '../components/Footer';
 import fotoMia from '../assets/images/fotomia.png';
 import curriculumPDF from '../assets/images/curriculum.pdf';
 
-const Home: React.FC = () => {
+const Habilidad: React.FC = () => {
   return (
-    <div className="bg-purple-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen">
       {/* Header */}
-      <header className="bg-purple-900 text-white py-4"> {/* Color morado */}
+      <header className="bg-blue-600 text-white py-4">
         <div className="container mx-auto px-4">
           <Header titulo="¿Quién soy?" />
         </div>
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
             <button
               id="prysboton"
               className="mt-4 bg-gray-800 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition"
-              onClick={() => window.open('http://www.prys.es/', '_blank')}
+              onClick={() => window.open('https://www.ejemplo.com', '_blank')}
             >
               Empresa Ejemplo
             </button>
@@ -60,7 +60,7 @@ const Home: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-purple-900 text-white py-6"> {/* Color morado */}
+      <footer className="bg-blue-600 text-white py-6">
         <div className="container mx-auto px-4">
           <Footer />
         </div>
@@ -69,4 +69,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Habilidad;

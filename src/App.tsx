@@ -1,13 +1,9 @@
-// src/App.tsx
 import React from 'react';
-import Home from './Pages/Home'; // Asegúrate de importar el componente correcto
+import ReactDOM from 'react-dom/client';
+import AppRouter from './routers/AppRouter'; // 👈
 
-const App: React.FC = () => {
-  return (
-    <div>
-      <Home /> {/* Aquí renderizamos el componente de la página */}
-    </div>
-  );
-};
-
-export default App;
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <AppRouter />
+  </React.StrictMode>
+);
