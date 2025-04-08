@@ -1,61 +1,117 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-// Importar imagen y PDF correctamente
-import fotoMia from '../assets/images/fotomia.png';
-import curriculumPDF from '../assets/images/curriculum.pdf';
-
 const Contacto: React.FC = () => {
+  const [formData, setFormData] = useState({
+    nombre: '',
+    email: '',
+    telefono: '',
+    mensaje: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Aquí puedes manejar el envío del formulario (por ejemplo, con una API)
+    console.log(formData);
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header */}
       <header className="bg-blue-600 text-white py-4">
         <div className="container mx-auto px-4">
-          <Header titulo="¿Quién soy?" />
+          <Header titulo="Contacto" />
         </div>
       </header>
 
       {/* Main Content */}
       <main>
         <div className="container mx-auto py-10 px-4 md:px-16">
-          <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-            <div id="asideimagen" className="text-center md:w-1/2">
-              <img
-                src={fotoMia}
-                alt="Foto propia"
-                loading="lazy"
-                className="rounded-full max-w-[250px] mx-auto"
-              />
-            </div>
-            <div id="descripcion" className="md:w-1/2">
-              <h2 className="text-3xl font-bold text-gray-800 mb-3">
-                <strong>Ismael Fernández López</strong>
-              </h2>
-              <p className="text-lg text-gray-600 mb-4">
-                Desarrollador web apasionado por la tecnología.
-              </p>
-              <a
-                href={curriculumPDF}
-                download="curriculum.pdf"
-                id="botondescargarcurriculum"
-                className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition"
-              >
-                Descargar currículum
-              </a>
-            </div>
-          </div>
+          {/* Formulario de Contacto */}
+          <section className="mt-10">
+            <h3 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+              Contáctame
+            </h3>
+            <div className="flex justify-center">
+              <div className="bg-custom p-6 rounded w-full max-w-lg">
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <label htmlFor="nombre" className="block text-lg mb-2">Nombre:</label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      name="nombre"
+                      className="form-input w-full p-2 border border-gray-300 rounded"
+                      required
+                      placeholder="Introduce tu nombre"
+                      value={formData.nombre}
+                      onChange={handleChange}
+                    />
+                  </div>
 
-          <div id="empresas" className="mt-10 text-center">
-            <h3 className="text-2xl font-semibold text-gray-800">Trabajé en:</h3>
-            <button
-              id="prysboton"
-              className="mt-4 bg-gray-800 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition"
-              onClick={() => window.open('https://www.ejemplo.com', '_blank')}
-            >
-              Empresa Ejemplo
-            </button>
-          </div>
+                  <div className="mb-4">
+                    <label htmlFor="email" className="block text-lg mb-2">Email:</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="form-input w-full p-2 border border-gray-300 rounded"
+                      required
+                      placeholder="Introduce tu email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label htmlFor="telefono" className="block text-lg mb-2">Número de Teléfono:</label>
+                    <input
+                      type="tel"
+                      id="telefono"
+                      name="telefono"
+                      className="form-input w-full p-2 border border-gray-300 rounded"
+                      required
+                      placeholder="Introduce tu teléfono"
+                      value={formData.telefono}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label htmlFor="mensaje" className="block text-lg mb-2">Mensaje:</label>
+                    <textarea
+                      id="mensaje"
+                      name="mensaje"
+                      rows={4}
+                      className="form-textarea w-full p-2 border border-gray-300 rounded"
+                      placeholder="Escribe tu mensaje aquí"
+                      value={formData.mensaje}
+                      onChange={handleChange}
+                    ></textarea>
+                  </div>
+
+                  <div className="text-center">
+                    <button
+                      type="submit"
+                      id="botonenviar"
+                      className="btn btn-primary w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                    >
+                      Enviar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
 

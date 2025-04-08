@@ -1,0 +1,90 @@
+/* Estilos para el Header */
+h1 {
+    background-color: #36313c; /* Color oscuro */
+    color: white;
+    margin: 0;
+    font-size: 2.5rem; /* Mejor tamaño de fuente, adaptable */
+    text-align: center; /* Centra el texto */
+    border-radius: 8px;
+    width: 100%;  /* Hace que ocupe todo el ancho disponible */
+    box-sizing: border-box;  /* Asegura que el padding no afecte al ancho */
+}
+
+nav {
+    background-color: #36313c;
+    padding: 10px 20px;
+    margin: 0 40px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+nav a {
+    color: aliceblue;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+    margin-right: 10px;
+    font-size: 1rem; /* Tamaño de fuente adecuado */
+    text-align: center;
+}
+
+/* Hover effect para los links */
+nav a:hover {
+    background-color: white;
+    color: #000000;
+    transform: scale(1.1);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 12px 22px; /* Aumentamos el padding durante el hover */
+}
+
+/* Redondear las esquinas del navbar */
+.border-radi {
+    border-radius: 10px;
+}
+
+/* Estilos para el menu de hamburguesa (para móviles) */
+@media (max-width: 992px) {
+    .hamburger-menu {
+        display: block;
+    }
+
+    .navbar-nav {
+        display: none; /* Ocultamos los links del nav */
+    }
+
+    /* Menú de hamburguesa activado */
+    .navbar-nav.active {
+        display: flex;
+        flex-direction: column; /* Los links estarán en columna */
+        background-color: #36313c; /* Fondo para el dropdown */
+        position: absolute;
+        top: 60px; /* Ajustamos para que aparezca justo debajo del navbar */
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .navbar-nav a {
+        padding: 12px 20px; /* Espaciado adecuado para los enlaces */
+        border-radius: 8px;
+    }
+
+    /* Alineación y distribución en dispositivos móviles */
+    .navbar-nav li {
+        margin: 10px 0;
+    }
+}

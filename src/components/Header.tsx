@@ -2,6 +2,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from "react-router";
+import '../styles/Header.css';
 
 interface HeaderProps {
   titulo: string;
@@ -24,24 +25,16 @@ const Header: React.FC<HeaderProps> = () => {
 
   return (
     <header className="bg-custom">
-      <div className="text-center py-20">
+      <div className="text-center">
         <h1
-          className="text-white py-3 rounded-xl"
-          style={{
-            fontFamily: "'Arial', sans-serif",
-            fontSize: '3rem',
-            letterSpacing: '2px',
-            textTransform: 'uppercase',
-            textShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-            lineHeight: '1.3',
-          }}
+
         >
           {titulo}
         </h1>
       </div>
 
       {/* Menú grande (pantallas grandes) */}
-      <nav className="hidden lg:flex justify-center bg-custom py-4">
+      <nav className="hidden lg:flex justify-center bg-custom">
         <ul className="flex space-x-10">
           <li>
             <Link to="/"
