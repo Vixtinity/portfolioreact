@@ -2,57 +2,58 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-// Importar imagen y PDF correctamente
+// Importar imágenes
 import cowboy1 from '../assets/images/proyecto2.jpg';
 import cowboy2 from '../assets/images/proyecto2-2.jpg';
 import cowboy3 from '../assets/images/proyecto2-3.jpg';
 
 const Proyecto: React.FC = () => {
+  const imagenes = [cowboy1, cowboy2, cowboy3];
+
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen bg-gray-900 flex flex-col">
       {/* Header */}
-      <header className="bg-blue-600 text-white py-4">
+      <header className=" text-white">
         <div className="container mx-auto px-4">
-          <Header titulo="¿Quién soy?" />
+          <Header titulo="Proyectos" />
         </div>
       </header>
 
       {/* Main Content */}
-      <main th:fragment="mainP">
-    <section class="contenedor-proyectos d-flex justify-content-center align-items-center" style="min-height: 60vh;">
-
-        <article class="proyecto card mb-4 shadow-sm" style="max-width: 600px;">
-            <div th:if="${#lists.isEmpty(proyecto1.imagenes)}" class="card-body">
-                <img th:src="@{${proyecto1.imagenes[0]}}" alt="Imagen de proyecto" class="card-img-top" />
+      <main className="flex-grow flex items-center justify-center">
+        <div className="bg-white shadow-lg rounded-lg max-w-xl w-full">
+          {/* Carrusel */}
+          <div className="relative w-full overflow-hidden rounded-t-lg">
+            <div className="flex transition-transform duration-500 ease-in-out">
+              {imagenes.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt={`Proyecto imagen ${idx + 1}`}
+                  className="w-full object-cover"
+                />
+              ))}
             </div>
+          </div>
 
-            <div th:if="${proyecto1.imagenes.size() > 1}" class="carrusel-imagenes carousel slide" id="carrusel" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <th:block th:each="imagen, iterStat : ${proyecto1.imagenes}">
-                        <div className="carousel-item" th:classappend="${iterStat.index == 0 ? 'active' : ''}">
-                            <img th:src="@{${imagen}}" class="d-block w-100" alt="Imagen de proyecto" />
-                        </div>
-                    </th:block>
-                </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#carrusel" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Anterior</span>
-                </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carrusel" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Siguiente</span>
-                </button>
-            </div>
+          {/* Info del proyecto */}
+          <div className="p-6 text-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-3">Cowboy Game</h2>
+            <p className="text-gray-600 mb-4">
+              Juego web desarrollado con Phaser y TypeScript, donde controlas un vaquero que debe sobrevivir en el viejo oeste.
+            </p>
+            <a
+              href="https://example.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+            >
+              Ir al proyecto
+            </a>
+          </div>
+        </div>
+      </main>
 
-            <div className="card-body">
-                <h2 className="titulo-proyecto card-title" th:text="${proyecto1.nombre}"></h2>
-                <p className="descripcion-proyecto card-text" th:text="${proyecto1.descripcion}"></p>
-                <a th:href="@{${proyecto1.url}}" class="btn btn-primary" title="Ir al proyecto">Ir al proyecto</a>
-            </div>
-        </article>
-        
-    </section>
-</main>
       {/* Footer */}
       <footer className="bg-blue-600 text-white py-6">
         <div className="container mx-auto px-4">

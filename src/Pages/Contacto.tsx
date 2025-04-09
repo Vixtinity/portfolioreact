@@ -24,7 +24,7 @@ const Contacto: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-900 min-h-screen">
       {/* Header */}
       <header className=" bg-gray-900 text-white">
         <div className="bg-gray-900 container mx-auto px-4">
