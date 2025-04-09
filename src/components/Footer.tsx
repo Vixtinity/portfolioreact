@@ -3,6 +3,7 @@ import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import infojobs from '../assets/images/infojobs.png';
 import botonvolver from '../assets/images/flechaarriba.png';
+import '../styles/Footer.css';
 
 const Footer: React.FC = () => {
   return (
