@@ -96,7 +96,7 @@ const Habilidad: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-purple-900 text-white py-6">
+      <footer className="bg-custom text-white py-6">
         <div className="container mx-auto px-4">
           <Footer />
         </div>

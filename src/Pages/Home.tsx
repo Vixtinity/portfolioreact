@@ -60,7 +60,7 @@ const Home: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-purple-900 text-gray-800 py-0"> {/* Morado pastel */}
+      <footer className="bg-custom text-gray-800 py-0"> {/* Morado pastel */}
         <div className="container mx-auto px-4">
           <Footer />
         </div>
