@@ -3,8 +3,9 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 // Importar imagen y PDF correctamente
-import fotoMia from '../assets/images/fotomia.png';
-import curriculumPDF from '../assets/images/curriculum.pdf';
+import cowboy1 from '../assets/images/proyecto2.jpg';
+import cowboy2 from '../assets/images/proyecto2-2.jpg';
+import cowboy3 from '../assets/images/proyecto2-3.jpg';
 
 const Proyecto: React.FC = () => {
   return (
@@ -17,48 +18,41 @@ const Proyecto: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main>
-        <div className="container mx-auto py-10 px-4 md:px-16">
-          <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-            <div id="asideimagen" className="text-center md:w-1/2">
-              <img
-                src={fotoMia}
-                alt="Foto propia"
-                loading="lazy"
-                className="rounded-full max-w-[250px] mx-auto"
-              />
-            </div>
-            <div id="descripcion" className="md:w-1/2">
-              <h2 className="text-3xl font-bold text-gray-800 mb-3">
-                <strong>Ismael Fernández López</strong>
-              </h2>
-              <p className="text-lg text-gray-600 mb-4">
-                Desarrollador web apasionado por la tecnología.
-              </p>
-              <a
-                href={curriculumPDF}
-                download="curriculum.pdf"
-                id="botondescargarcurriculum"
-                className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition"
-              >
-                Descargar currículum
-              </a>
-            </div>
-          </div>
+      <main th:fragment="mainP">
+    <section class="contenedor-proyectos d-flex justify-content-center align-items-center" style="min-height: 60vh;">
 
-          <div id="empresas" className="mt-10 text-center">
-            <h3 className="text-2xl font-semibold text-gray-800">Trabajé en:</h3>
-            <button
-              id="prysboton"
-              className="mt-4 bg-gray-800 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition"
-              onClick={() => window.open('https://www.ejemplo.com', '_blank')}
-            >
-              Empresa Ejemplo
-            </button>
-          </div>
-        </div>
-      </main>
+        <article class="proyecto card mb-4 shadow-sm" style="max-width: 600px;">
+            <div th:if="${#lists.isEmpty(proyecto1.imagenes)}" class="card-body">
+                <img th:src="@{${proyecto1.imagenes[0]}}" alt="Imagen de proyecto" class="card-img-top" />
+            </div>
 
+            <div th:if="${proyecto1.imagenes.size() > 1}" class="carrusel-imagenes carousel slide" id="carrusel" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <th:block th:each="imagen, iterStat : ${proyecto1.imagenes}">
+                        <div className="carousel-item" th:classappend="${iterStat.index == 0 ? 'active' : ''}">
+                            <img th:src="@{${imagen}}" class="d-block w-100" alt="Imagen de proyecto" />
+                        </div>
+                    </th:block>
+                </div>
+                <button className="carousel-control-prev" type="button" data-bs-target="#carrusel" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Anterior</span>
+                </button>
+                <button className="carousel-control-next" type="button" data-bs-target="#carrusel" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+
+            <div className="card-body">
+                <h2 className="titulo-proyecto card-title" th:text="${proyecto1.nombre}"></h2>
+                <p className="descripcion-proyecto card-text" th:text="${proyecto1.descripcion}"></p>
+                <a th:href="@{${proyecto1.url}}" class="btn btn-primary" title="Ir al proyecto">Ir al proyecto</a>
+            </div>
+        </article>
+        
+    </section>
+</main>
       {/* Footer */}
       <footer className="bg-blue-600 text-white py-6">
         <div className="container mx-auto px-4">

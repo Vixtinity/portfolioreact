@@ -20,37 +20,36 @@ const Contacto: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí puedes manejar el envío del formulario (por ejemplo, con una API)
     console.log(formData);
   };
 
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header */}
-      <header className="bg-blue-600 text-white py-4">
-        <div className="container mx-auto px-4">
+      <header className=" bg-gray-900 text-white">
+        <div className="bg-gray-900 container mx-auto px-4">
           <Header titulo="Contacto" />
         </div>
       </header>
 
       {/* Main Content */}
       <main>
-        <div className="container mx-auto py-10 px-4 md:px-16">
+        <div className="bg-gray-900 container mx-auto py-10 px-4 md:px-16">
           {/* Formulario de Contacto */}
           <section className="mt-10">
-            <h3 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+            <h3 className="text-2xl font-semibold text-white text-center mb-4">
               Contáctame
             </h3>
             <div className="flex justify-center">
               <div className="bg-custom p-6 rounded w-full max-w-lg">
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
-                    <label htmlFor="nombre" className="block text-lg mb-2">Nombre:</label>
+                    <label htmlFor="nombre" className="text-white block text-lg mb-2">Nombre:</label>
                     <input
                       type="text"
                       id="nombre"
                       name="nombre"
-                      className="form-input w-full p-2 border border-gray-300 rounded"
+                      className="form-input w-full p-2 border border-white rounded text-white"
                       required
                       placeholder="Introduce tu nombre"
                       value={formData.nombre}
@@ -59,12 +58,12 @@ const Contacto: React.FC = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="email" className="block text-lg mb-2">Email:</label>
+                    <label htmlFor="email" className="text-white block text-lg mb-2">Email:</label>
                     <input
                       type="email"
                       id="email"
                       name="email"
-                      className="form-input w-full p-2 border border-gray-300 rounded"
+                      className="text-white form-input w-full p-2 border rounded"
                       required
                       placeholder="Introduce tu email"
                       value={formData.email}
@@ -73,12 +72,12 @@ const Contacto: React.FC = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="telefono" className="block text-lg mb-2">Número de Teléfono:</label>
+                    <label htmlFor="telefono" className="text-white block text-lg mb-2">Número de Teléfono:</label>
                     <input
                       type="tel"
                       id="telefono"
                       name="telefono"
-                      className="form-input w-full p-2 border border-gray-300 rounded"
+                      className="text-white form-input w-full p-2 border rounded"
                       required
                       placeholder="Introduce tu teléfono"
                       value={formData.telefono}
@@ -87,12 +86,12 @@ const Contacto: React.FC = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="mensaje" className="block text-lg mb-2">Mensaje:</label>
+                    <label htmlFor="mensaje" className="text-white block text-lg mb-2">Mensaje:</label>
                     <textarea
                       id="mensaje"
                       name="mensaje"
                       rows={4}
-                      className="form-textarea w-full p-2 border border-gray-300 rounded"
+                      className="form-textarea w-full p-2 border text-white rounded"
                       placeholder="Escribe tu mensaje aquí"
                       value={formData.mensaje}
                       onChange={handleChange}
@@ -103,7 +102,7 @@ const Contacto: React.FC = () => {
                     <button
                       type="submit"
                       id="botonenviar"
-                      className="btn btn-primary w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                      className="btn btn-primary w-full py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition"
                     >
                       Enviar
                     </button>

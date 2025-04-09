@@ -8,7 +8,7 @@ import curriculumPDF from '../assets/images/curriculum.pdf';
 
 const Home: React.FC = () => {
   return (
-    <div className="bg-gray-900 min-h-screen">
+    <div className="bg-gray-900">
       {/* Header */}
       <header className="">
         <div className="container mx-auto px-1">
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
                 <strong>Ismael Fernández López</strong>
               </h2>
               <p className="text-lg text-white mb-4">
-                Desarrollador web apasionado por la tecnología.
+              ¡Hola! Soy un joven de 18 años apasionado por la tecnología y el desarrollo web. Actualmente estoy cursando el primer año de Desarrollo de Aplicaciones Web (DAW). En este curso, he trabajado con tecnologías como HTML, CSS, Java, entre otras. A través de este portfolio, quiero mostrar mis proyectos y el progreso que voy realizando, a medida que me adentro en el mundo del desarrollo web.
               </p>
               <a
                 href={curriculumPDF}
@@ -47,13 +47,13 @@ const Home: React.FC = () => {
           </div>
 
           <div id="empresas" className="mt-10 text-center">
-            <h3 className="text-2xl font-semibold text-gray-800">Trabajé en:</h3>
+            <h3 className="text-2xl font-semibold text-white">Trabajé en:</h3>
             <button
               id="prysboton"
               className="mt-4 bg-yellow-200 text-gray-800 py-2 px-6 rounded-md hover:bg-yellow-300 transition"
               onClick={() => window.open('http://www.prys.es/', '_blank')}
             >
-              Empresa Ejemplo
+              PRYS
             </button>
           </div>
         </div>
