@@ -81,24 +81,24 @@ const Header: React.FC<HeaderProps> = () => {
 
         <ul className="peer-checked:block hidden mt-4 space-y-4 bg-custom p-4 rounded-md shadow-md">
           <li>
+          <Link to="/" className="block text-white hover:text-gray-300">
+              ¿Quien son?
+          </Link>
+          </li>
+          <li>
           <Link to="/habilidad" className="block text-white hover:text-gray-300">
               Habilidades
-            </Link>
+          </Link>
           </li>
           <li>
-            <a href="/habilidad" className="block text-white hover:text-gray-300">
-              Habilidades
-            </a>
-          </li>
-          <li>
-            <a href="/proyectos" className="block text-white hover:text-gray-300">
+          <Link to="/proyectos" className="block text-white hover:text-gray-300">
               Proyectos
-            </a>
+          </Link>
           </li>
           <li>
-            <a href="/contacto" className="block text-white hover:text-gray-300">
+          <Link to="/contacto" className="block text-white hover:text-gray-300">
               Contacto
-            </a>
+          </Link>
           </li>
         </ul>
       </div>
