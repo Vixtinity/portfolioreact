@@ -81,9 +81,9 @@ const Header: React.FC<HeaderProps> = () => {
 
         <ul className="peer-checked:block hidden mt-4 space-y-4 bg-custom p-4 rounded-md shadow-md">
           <li>
-            <a href="/" className="block text-white hover:text-gray-300">
-              ¿Quién soy?
-            </a>
+          <Link to="/habilidad" className="block text-white hover:text-gray-300">
+              Habilidades
+            </Link>
           </li>
           <li>
             <a href="/habilidad" className="block text-white hover:text-gray-300">
