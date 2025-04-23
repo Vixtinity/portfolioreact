@@ -7,8 +7,6 @@ import fotoMia from '../assets/images/fotomia.png';
 import curriculumPDF from '../assets/images/curriculum.pdf';
 
 const Home: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   // Manejar el clic en el botón "volver arriba"
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
