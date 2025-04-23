@@ -31,10 +31,6 @@ const Home: React.FC = () => {
     }
   };
 
-  // Toggle del menú
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
 
   useEffect(() => {
     // Cleanup para evitar fugas de memoria al desmontar el componente

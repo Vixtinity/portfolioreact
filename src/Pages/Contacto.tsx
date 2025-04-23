@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useNavigate } from 'react-router-dom';
 
 const Contacto: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +11,6 @@ const Contacto: React.FC = () => {
   });
 
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
