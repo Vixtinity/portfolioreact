@@ -2,7 +2,6 @@ import React from 'react';
 import linkedin from '../assets/images/linkedin.png';
 import twitter from '../assets/images/twitter.png';
 import infojobs from '../assets/images/infojobs.png';
-import botonvolver from '../assets/images/flechaarriba.png';
 import '../styles/Footer.css';
 
 const Footer: React.FC = () => {
@@ -10,15 +9,7 @@ const Footer: React.FC = () => {
     <footer className="bg-custom text-white py-6 text-center">
       {/* Botón volver arriba */}
       <a href="#" aria-label="Volver al inicio de la página" className="inline-block mb-2">
-        <img
-          src={botonvolver}
-          alt="Botón para volver al inicio"
-          loading="lazy"
-          className="mx-auto"
-          width="30"
-        />
       </a>
-      <p className="mb-4">Volver arriba</p>
 
       {/* Redes sociales */}
       <section

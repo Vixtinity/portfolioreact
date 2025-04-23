@@ -2,23 +2,21 @@ import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-// Importar imagen y PDF correctamente
 import fotoMia from '../assets/images/fotomia.png';
 import curriculumPDF from '../assets/images/curriculum.pdf';
 
 const Home: React.FC = () => {
-  // Manejar el clic en el botón "volver arriba"
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
 
 
-  // Funcionalidad del botón "PRYS"
+
   const handleHoverPrys = () => {
     const mapaContainer = document.getElementById('mapa-container');
     if (mapaContainer) {
-      mapaContainer.style.maxHeight = '200px'; // Expandimos el contenedor
+      mapaContainer.style.maxHeight = '200px';
     }
   };
 
@@ -31,9 +29,9 @@ const Home: React.FC = () => {
 
 
   useEffect(() => {
-    // Cleanup para evitar fugas de memoria al desmontar el componente
+
     return () => {
-      document.body.classList.remove('opacity-0'); // Aseguramos que el fade-out no quede activo
+      document.body.classList.remove('opacity-0');
     };
   }, []);
 
