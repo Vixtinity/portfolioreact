@@ -1,24 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-// Importar imágenes
-import cowboy1 from '../assets/images/proyecto2.jpg';
-import cowboy2 from '../assets/images/proyecto2-2.jpg';
-import cowboy3 from '../assets/images/proyecto2-3.jpg';
-
 const Proyecto: React.FC = () => {
-  const imagenes = [cowboy1, cowboy2, cowboy3];
-  const [indice, setIndice] = useState(0);
-
-  // Carrusel automático
-  useEffect(() => {
-    const intervalo = setInterval(() => {
-      setIndice((prev) => (prev + 1) % imagenes.length);
-    }, 3000);
-    return () => clearInterval(intervalo);
-  }, [imagenes.length]);
-
   // Ir arriba suavemente
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -33,36 +17,31 @@ const Proyecto: React.FC = () => {
         </div>
       </header>
 
-      {/* Main */}
       <main className="flex-grow flex items-center justify-center">
         <div className="bg-black shadow-lg rounded-lg max-w-xl w-full">
-          {/* Carrusel */}
-          <div className="relative w-full overflow-hidden rounded-t-lg h-64">
-            {imagenes.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                alt={`Proyecto imagen ${idx + 1}`}
-                className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-                  idx === indice ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                }`}
-              />
-            ))}
+          <div className="relative w-full overflow-hidden rounded-t-lg aspect-video">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/S6QB4-9-hlg"
+              title="Proyecto librería"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
 
-          {/* Info del proyecto */}
           <div className="p-6 text-center">
-            <h2 className="text-2xl font-bold text-white mb-3">Página de Cowboy Bebop</h2>
+            <h2 className="text-2xl font-bold text-white mb-3">Proyecto librería hecho en React</h2>
             <p className="text-white mb-4">
-              Página de Cowboy Bebop hecha en Google Sites
+              Pequeño proyecto de React conectado con MariaDB.
             </p>
             <a
-              href="https://sites.google.com/view/bebopsmr1/inicio"
+              href="https://youtu.be/S6QB4-9-hlg"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-purple-900 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded transition"
             >
-              Ir al proyecto
+              Ver en YouTube
             </a>
           </div>
         </div>
