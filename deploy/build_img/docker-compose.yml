@@ -1,0 +1,8 @@
+services:
+  portfolio:
+    build: .
+    image: ismaelfernandez/portfolioreact:v1
+    container_name: portfolio_app
+    ports: 
+      - "8000:8000"
+    restart: always
