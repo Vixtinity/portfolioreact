@@ -7,7 +7,7 @@ import '../styles/Footer.css';
 const Footer: React.FC = () => {
   return (
     <footer className="bg-custom text-white py-6 text-center">
-      {/* Botón volvdasdsadsaer arriba subida */}
+      {/* Botón dsdsadsadasdsad arriba subida */}
       <a href="#" aria-label="Volver al inicio de la página" className="inline-block mb-2">
       </a>
 
