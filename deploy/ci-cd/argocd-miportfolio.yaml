@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portfolio-ismael
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Vixtinity/portfolioreact.git
+    targetRevision: master
+    path: deploy/kubernetes/helm
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: portfolio_namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
