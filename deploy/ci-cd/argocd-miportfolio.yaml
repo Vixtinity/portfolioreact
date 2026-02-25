@@ -15,7 +15,7 @@ spec:
         - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: portfolio_namespace
+    namespace: portfolio-namespace
   syncPolicy:
     automated:
       prune: true
