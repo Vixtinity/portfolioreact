@@ -8,7 +8,7 @@ spec:
 
   source:
     repoURL: https://github.com/Vixtinity/portfolioreact.git
-    targetRevision: master
+    targetRevision: main
     path: deploy/kubernetes/helm
     helm:
       valueFiles:
