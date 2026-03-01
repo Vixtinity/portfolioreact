@@ -40,7 +40,7 @@ const Home: React.FC = () => {
       {/* Header */}
       <header>
         <div className="container mx-auto px-1">
-          <Header titulo="¿Quién soyyyyyyy?" />
+          <Header titulo="¿Quién soy?" />
         </div>
       </header>
 
@@ -68,7 +68,7 @@ const Home: React.FC = () => {
                 download="curriculum.pdf"
                 className="bg-purple-300 text-gray-800 py-2 px-6 rounded-md hover:bg-pink-400 transition"
               >
-                Descargar currículum
+                Descargar currículummmmmmmm
               </a>
             </div>
           </div>
