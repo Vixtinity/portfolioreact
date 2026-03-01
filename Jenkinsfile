@@ -64,14 +64,14 @@ stage('Update ArgoCD Manifest') {
                             git config user.name "Jenkins CI"
 
                             # 3. EL COMANDO CON LA RUTA CORRECTA
-                            # Ajustado a: deploy/kubernetes/deploy_portfolio.yml
+                            # Ajustado a: deploy/kubernetes/deploy_portfolio.yaml
                             sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/kubernetes/deploy_portfolio.yaml
 
                             # 4. Confirmar el cambio localmente (para debugging)
-                            grep "image:" deploy/kubernetes/deploy_portfolio.yml
+                            grep "image:" deploy/kubernetes/deploy_portfolio.yaml
 
                             # 5. Commit y Push
-                            git add deploy/kubernetes/deploy_portfolio.yml
+                            git add deploy/kubernetes/deploy_portfolio.yaml
                             git commit -m "chore: update image to ${env.GIT_COMMIT} [skip ci]"
                             
                             # REEMPLAZA 'PORTFOLIOREACT' por el nombre de tu repo en GitHub
