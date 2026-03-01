@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: deploy-portfolio
   namespace: portfolio-namespace
+  rollout-date: {{ now | quote }}
 spec:
   replicas: 1
   selector:
