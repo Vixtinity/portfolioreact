@@ -68,7 +68,7 @@ const Home: React.FC = () => {
                 download="curriculum.pdf"
                 className="bg-purple-300 text-gray-800 py-2 px-6 rounded-md hover:bg-pink-400 transition"
               >
-                Descargar currículum pruebacurri
+                Descargar curriculummmmmm
               </a>
             </div>
           </div>
