@@ -65,7 +65,7 @@ stage('Update ArgoCD Manifest') {
 
                             # 3. Modificar el YAML (Asegúrate de que la ruta 'deploy/tu-archivo.yaml' sea correcta)
                             # Usamos la variable GIT_COMMIT que Kaniko ya usó
-                            sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/tu-archivo.yaml
+                            sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/deploy_portfolio.yaml
 
                             # 4. Commit de los cambios
                             git add deploy/tu-archivo.yaml
