@@ -40,7 +40,7 @@ const Home: React.FC = () => {
       {/* Header */}
       <header>
         <div className="container mx-auto px-1">
-          <Header titulo="¿Quién soy?" />
+          <Header titulo="¿Quién soyyyyyyy?" />
         </div>
       </header>
 
