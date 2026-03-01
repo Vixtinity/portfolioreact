@@ -65,7 +65,7 @@ stage('Update ArgoCD Manifest') {
 
                             # 3. EL COMANDO CON LA RUTA CORRECTA
                             # Ajustado a: deploy/kubernetes/deploy_portfolio.yml
-                            sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/kubernetes/deploy_portfolio.yml
+                            sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/kubernetes/deploy_portfolio.yaml
 
                             # 4. Confirmar el cambio localmente (para debugging)
                             grep "image:" deploy/kubernetes/deploy_portfolio.yml
