@@ -13,7 +13,6 @@ spec:
       {{- include "miportfolio.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      rollout.static.force/restartedAt: {{ now | quote }}
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
