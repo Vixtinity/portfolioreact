@@ -3,7 +3,7 @@ services:
     build: 
       context: ../..
       dockerfile: deploy/build_img/Dockerfile
-    image: iferlop/portfolioreact:latest
+    image: iferlop/portfolio_app:latest
     container_name: portfolio_app
     ports: 
       - "8000:80"
