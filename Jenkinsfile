@@ -56,24 +56,26 @@ stage('Update ArgoCD Manifest') {
                 container('git-tool') {
                     withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh """
-                            # 1. Forzar que estamos en el directorio de trabajo
+                            # 1. Configuración de seguridad
                             git config --global --add safe.directory \$(pwd)
                             
                             # 2. Configurar identidad
                             git config user.email "jenkins@example.com"
                             git config user.name "Jenkins CI"
 
-                            # 3. Modificar el YAML (Asegúrate de que la ruta 'deploy/tu-archivo.yaml' sea correcta)
-                            # Usamos la variable GIT_COMMIT que Kaniko ya usó
-                            sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/deploy_portfolio.yaml
+                            # 3. EL COMANDO CON LA RUTA CORRECTA
+                            # Ajustado a: deploy/kubernetes/deploy_portfolio.yml
+                            sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/kubernetes/deploy_portfolio.yml
 
-                            # 4. Commit de los cambios
-                            git add deploy/tu-archivo.yaml
+                            # 4. Confirmar el cambio localmente (para debugging)
+                            grep "image:" deploy/kubernetes/deploy_portfolio.yml
+
+                            # 5. Commit y Push
+                            git add deploy/kubernetes/deploy_portfolio.yml
                             git commit -m "chore: update image to ${env.GIT_COMMIT} [skip ci]"
-
-                            # 5. Push usando el Token (esto es lo que ArgoCD detectará)
-                            # IMPORTANTE: Cambia 'github.com/tu-usuario/tu-repo.git' por tu URL real
-                            git push https://${GIT_USER}:${GIT_PASS}@github.com/iferlop/tu-repo-name.git HEAD:main
+                            
+                            # REEMPLAZA 'PORTFOLIOREACT' por el nombre de tu repo en GitHub
+                            git push https://${GIT_USER}:${GIT_PASS}@github.com/iferlop/PORTFOLIOREACT.git HEAD:main
                         """
                     }
                 }
