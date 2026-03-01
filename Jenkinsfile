@@ -77,7 +77,7 @@ stage('Update ArgoCD Manifest') {
                     git commit -m "chore: update image to ${env.GIT_COMMIT} [skip ci]"
                     
                     # Asegúrate de que el nombre del repo sea PORTFOLIOREACT
-                    git push https://${GIT_USER}:${GIT_PASS}@github.com/iferlop/PORTFOLIOREACT.git main
+                    git push https://${GIT_USER}:${GIT_PASS}@github.com/vixtinity/portfolioreact.git main
                 """
             }
         }
