@@ -20,7 +20,7 @@ spec:
             type: DirectoryOrCreate
       containers:
         - name: miportfolio
-          image: iferlop/portfolioreact:a1a095191e4d9c1b14f853b77cdfa0d73bab9d4e
+          image: iferlop/portfolioreact:975ec515c45074be2464f97abae8a4c32be70657
           imagePullPolicy: Always
           ports:
             - containerPort: 80
