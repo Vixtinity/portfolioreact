@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: iferlop/portfolio_app
   pullPolicy: Always
-  tag: "6ddd9fe7130a6a79b32b9a157ddfe3a8c36552e3"
+  tag: "b78cbc389f46bdb0c81c55accbcd2be980308089"
 
 imagePullSecrets: []
 nameOverride: ""
