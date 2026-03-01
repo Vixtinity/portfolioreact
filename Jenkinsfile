@@ -51,27 +51,29 @@ spec:
             }
         }
 
-        stage('Update ArgoCD Manifest') {
+stage('Update ArgoCD Manifest') {
             steps {
                 container('git-tool') {
-                    // Usamos credenciales de Jenkins para poder hacer Push al repo
-                    // Debes crear una credencial de tipo 'Username with password' con ID 'github-creds'
                     withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh """
-                            # Configurar usuario de Git
-                            git config user.email "jenkins@tu-dominio.com"
+                            # 1. Forzar que estamos en el directorio de trabajo
+                            git config --global --add safe.directory \$(pwd)
+                            
+                            # 2. Configurar identidad
+                            git config user.email "jenkins@example.com"
                             git config user.name "Jenkins CI"
 
-                            # 1. Modificar el YAML usando sed
-                            # Cambia 'deploy/tu-archivo.yaml' por la ruta real de tu archivo de deployment
-                            sed -i 's|image: iferlop/portfolioreact:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/tu-archivo.yaml
+                            # 3. Modificar el YAML (Asegúrate de que la ruta 'deploy/tu-archivo.yaml' sea correcta)
+                            # Usamos la variable GIT_COMMIT que Kaniko ya usó
+                            sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/tu-archivo.yaml
 
-                            # 2. Commit y Push
+                            # 4. Commit de los cambios
                             git add deploy/tu-archivo.yaml
-                            git commit -m "chore: update image tag to ${env.GIT_COMMIT} [skip ci]"
-                            
-                            # Reemplaza la URL por la de tu repositorio
-                            git push https://${GIT_USER}:${GIT_PASS}@github.com/tu-usuario/tu-repo.git HEAD:main
+                            git commit -m "chore: update image to ${env.GIT_COMMIT} [skip ci]"
+
+                            # 5. Push usando el Token (esto es lo que ArgoCD detectará)
+                            # IMPORTANTE: Cambia 'github.com/tu-usuario/tu-repo.git' por tu URL real
+                            git push https://${GIT_USER}:${GIT_PASS}@github.com/iferlop/tu-repo-name.git HEAD:main
                         """
                     }
                 }
