@@ -2,21 +2,18 @@ pipeline {
     agent {
         kubernetes {
             yaml """
-apiVersion: 
+apiVersion: v1
 kind: Pod
 spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    command: ["/busybox/cat"]
+    command:
+    - /busybox/cat
     tty: true
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
-  - name: git-tool
-    image: alpine/git # Contenedor ligero con Git
-    command: ["/bin/sh", "-c", "cat"]
-    tty: true
   volumes:
   - name: kaniko-secret
     secret:
@@ -26,6 +23,10 @@ spec:
         path: config.json
 """
         }
+    }
+
+    environment {
+        IMAGE = "iferlop/portfolio_app:latest"
     }
 
     stages {
@@ -50,28 +51,5 @@ spec:
                 }
             }
         }
-
-stage('Update ArgoCD Manifest') {
-    steps {
-        container('git-tool') {
-            withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
-                sh """
-                    git config --global --add safe.directory \$(pwd)
-                    git checkout main || git checkout -b main
-                    git config user.email "jenkins@example.com"
-                    git config user.name "Jenkins CI"
-
-                    # EDITAMOS EL VALUES.YAML DE HELM
-                    # Esto busca la línea 'tag:' y le pone el nuevo hash
-                    sed -i 's|tag:.*|tag: "${env.GIT_COMMIT}"|' deploy/miportfolio/values.yaml
-
-                    git add deploy/miportfolio/values.yaml
-                    git commit -m "chore: update helm tag to ${env.GIT_COMMIT} [skip ci]"
-                    git push https://${GIT_USER}:${GIT_PASS}@github.com/Vixtinity/portfolioreact.git main
-                """
-            }
-        }
-    }
-}
     }
 }
