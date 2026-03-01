@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             yaml """
-apiVersion: v1
+apiVersion: 
 kind: Pod
 spec:
   containers:
@@ -52,34 +52,36 @@ spec:
         }
 
 stage('Update ArgoCD Manifest') {
-            steps {
-                container('git-tool') {
-                    withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
-                        sh """
-                            # 1. Configuración de seguridad
-                            git config --global --add safe.directory \$(pwd)
-                            
-                            # 2. Configurar identidad
-                            git config user.email "jenkins@example.com"
-                            git config user.name "Jenkins CI"
+    steps {
+        container('git-tool') {
+            withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
+                sh """
+                    # 1. Configuración de Git y Seguridad
+                    git config --global --add safe.directory \$(pwd)
+                    git config user.email "jenkins@example.com"
+                    git config user.name "Jenkins CI"
 
-                            # 3. EL COMANDO CON LA RUTA CORRECTA
-                            # Ajustado a: deploy/kubernetes/deploy_portfolio.yaml
-                            sed -i 's|image: iferlop/portfolio_app:.*|image: iferlop/portfolio_app:${env.GIT_COMMIT}|' deploy/kubernetes/deploy_portfolio.yaml
+                    # 2. SALIR DEL MODO DETACHED (Ir a main)
+                    git checkout main || git checkout -b main
 
-                            # 4. Confirmar el cambio localmente (para debugging)
-                            grep "image:" deploy/kubernetes/deploy_portfolio.yaml
+                    # 3. EL SED CORREGIDO (Usando portfolioreact que es el nombre real en tu YAML)
+                    sed -i 's|image: iferlop/portfolioreact:.*|image: iferlop/portfolioreact:${env.GIT_COMMIT}|' deploy/kubernetes/deploy_portfolio.yaml
 
-                            # 5. Commit y Push
-                            git add deploy/kubernetes/deploy_portfolio.yaml
-                            git commit -m "chore: update image to ${env.GIT_COMMIT} [skip ci]"
-                            
-                            # REEMPLAZA 'PORTFOLIOREACT' por el nombre de tu repo en GitHub
-                            git push https://${GIT_USER}:${GIT_PASS}@github.com/iferlop/PORTFOLIOREACT.git HEAD:main
-                        """
-                    }
-                }
+                    # 4. VERIFICACIÓN (Si esto sale bien, verás el hash en la consola)
+                    echo "--- Verificando cambio en el YAML ---"
+                    grep "image:" deploy/kubernetes/deploy_portfolio.yaml
+                    echo "------------------------------------"
+
+                    # 5. COMMIT Y PUSH
+                    git add deploy/kubernetes/deploy_portfolio.yaml
+                    git commit -m "chore: update image to ${env.GIT_COMMIT} [skip ci]"
+                    
+                    # Asegúrate de que el nombre del repo sea PORTFOLIOREACT
+                    git push https://${GIT_USER}:${GIT_PASS}@github.com/iferlop/PORTFOLIOREACT.git main
+                """
             }
         }
+    }
+}
     }
 }
