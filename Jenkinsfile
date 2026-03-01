@@ -56,28 +56,18 @@ stage('Update ArgoCD Manifest') {
         container('git-tool') {
             withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                 sh """
-                    # 1. Configuración de Git y Seguridad
                     git config --global --add safe.directory \$(pwd)
+                    git checkout main || git checkout -b main
                     git config user.email "jenkins@example.com"
                     git config user.name "Jenkins CI"
 
-                    # 2. SALIR DEL MODO DETACHED (Ir a main)
-                    git checkout main || git checkout -b main
+                    # EDITAMOS EL VALUES.YAML DE HELM
+                    # Esto busca la línea 'tag:' y le pone el nuevo hash
+                    sed -i 's|tag:.*|tag: "${env.GIT_COMMIT}"|' deploy/miportfolio/values.yaml
 
-                    # 3. EL SED CORREGIDO (Usando portfolioreact que es el nombre real en tu YAML)
-                    sed -i 's|image: iferlop/portfolioreact:.*|image: iferlop/portfolioreact:${env.GIT_COMMIT}|' deploy/kubernetes/deploy_portfolio.yaml
-
-                    # 4. VERIFICACIÓN (Si esto sale bien, verás el hash en la consola)
-                    echo "--- Verificando cambio en el YAML ---"
-                    grep "image:" deploy/kubernetes/deploy_portfolio.yaml
-                    echo "------------------------------------"
-
-                    # 5. COMMIT Y PUSH
-                    git add deploy/kubernetes/deploy_portfolio.yaml
-                    git commit -m "chore: update image to ${env.GIT_COMMIT} [skip ci]"
-                    
-                    # Asegúrate de que el nombre del repo sea PORTFOLIOREACT
-                    git push https://${GIT_USER}:${GIT_PASS}@github.com/vixtinity/portfolioreact.git main
+                    git add deploy/miportfolio/values.yaml
+                    git commit -m "chore: update helm tag to ${env.GIT_COMMIT} [skip ci]"
+                    git push https://${GIT_USER}:${GIT_PASS}@github.com/Vixtinity/portfolioreact.git main
                 """
             }
         }

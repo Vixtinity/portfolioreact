@@ -2,8 +2,8 @@ replicaCount: 1
 
 image:
   repository: iferlop/portfolio_app
-  pullPolicy: IfNotPresent
-  tag: "latest"
+  pullPolicy: Always
+  tag: "v1"
 
 imagePullSecrets: []
 nameOverride: ""
