@@ -62,6 +62,10 @@ stage('Update Manifests') {
                         # 1. Solucionar el error de "dubious ownership"
                         git config --global --add safe.directory \$(pwd)
 
+                        # 2. Configurar identidad (necesario para el commit)
+                        git config --global user.email "08062006ismael@gmail.com"
+                        git config --global user.name "Vixtinity"
+                        
                         # 3. Modificar el values.yaml con el nuevo tag
                         sed -i 's/tag: .*/tag: "${SHORT_SHA}"/' deploy/miportfolio/values.yaml
                         
