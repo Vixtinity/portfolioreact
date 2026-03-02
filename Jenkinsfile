@@ -56,7 +56,12 @@ spec:
         stage('Force Restart') {
             steps {
                 container('kubectl-tool') {
-                    sh "kubectl rollout restart deployment portfolio-ismael-miportfolio -n portfolio-namespace"
+                    sh """
+                        echo "Iniciando reinicio del despliegue..."
+                        kubectl rollout restart deployment portfolio-ismael-miportfolio -n portfolio-namespace
+                        echo "Esperando a que el reinicio se complete..."
+                        kubectl rollout status deployment portfolio-ismael-miportfolio -n portfolio-namespace
+                    """
                 }
             }
         }
