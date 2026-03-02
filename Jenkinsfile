@@ -8,12 +8,15 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    command:
-    - /busybox/cat
+    command: ["/busybox/cat"]
     tty: true
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
+  - name: kubectl-tool
+    image: bitnami/kubectl:latest
+    command: ["/bin/sh", "-c", "cat"]
+    tty: true
   volumes:
   - name: kaniko-secret
     secret:
@@ -49,11 +52,10 @@ spec:
                 }
             }
         }
+
         stage('Force Restart') {
             steps {
-                script {
-                    // Esto le dice a Kubernetes: "Reinicia el despliegue"
-                    // Al tener 'imagePullPolicy: Always', bajará la nueva versión de 'latest'
+                container('kubectl-tool') {
                     sh "kubectl rollout restart deployment portfolio-ismael-miportfolio -n portfolio-namespace"
                 }
             }
