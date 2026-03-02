@@ -49,5 +49,14 @@ spec:
                 }
             }
         }
+        stage('Force Restart') {
+            steps {
+                script {
+                    // Esto le dice a Kubernetes: "Reinicia el despliegue"
+                    // Al tener 'imagePullPolicy: Always', bajará la nueva versión de 'latest'
+                    sh "kubectl rollout restart deployment portfolio-ismael-miportfolio -n portfolio-namespace"
+                }
+            }
+        }
     }
 }
