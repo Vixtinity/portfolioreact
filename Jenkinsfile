@@ -8,14 +8,14 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    command: ["/busybox/cat"]
+    command: ["/busybox/sh", "-c", "sleep infinity"]
     tty: true
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
   - name: kubectl-tool
     image: bitnami/kubectl:latest
-    command: ["/bin/sh", "-c", "cat"]
+    command: ["/bin/sh", "-c", "sleep infinity"]
     tty: true
   volumes:
   - name: kaniko-secret
@@ -56,7 +56,7 @@ spec:
         stage('Force Deployment Update') {
             steps {
                 container('kubectl-tool') {
-                    // Esto fuerza a los Pods a refrescarse con la nueva imagen :latest
+                    // Esto ahora no se colgará porque el contenedor está 'despierto'
                     sh "kubectl rollout restart deployment portfolio-ismael-miportfolio -n portfolio-namespace"
                 }
             }
