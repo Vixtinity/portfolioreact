@@ -13,6 +13,7 @@ spec:
       {{- include "miportfolio.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      rollout-date: {{ .Values.renderTimestamp | quote }}
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
