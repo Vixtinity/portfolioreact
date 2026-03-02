@@ -14,7 +14,7 @@ spec:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
   - name: git-tool
-    image: alpine/git # Contenedor ligero para actualizar el values.yaml
+    image: alpine/git
     command: ["/bin/sh", "-c", "cat"]
     tty: true
   volumes:
@@ -29,7 +29,7 @@ spec:
     }
 
     environment {
-        // Generamos un tag corto basado en el commit de Git
+        // Necesitas definir esto para que el stage de Update funcione
         SHORT_SHA = "${env.GIT_COMMIT.take(7)}"
         IMAGE_REPO = "iferlop/portfolio_app"
     }
@@ -55,25 +55,24 @@ spec:
                 }
             }
         }
-stage('Update Manifests') {
+
+        stage('Update Manifests') {
             steps {
                 container('git-tool') {
                     sh """
-                        # 1. Solucionar el error de "dubious ownership"
                         git config --global --add safe.directory \$(pwd)
-
-                        # 2. Configurar identidad (necesario para el commit)
                         git config --global user.email "08062006ismael@gmail.com"
-                        git config --global user.name "Vixtinity"
-                        
-                        # 3. Modificar el values.yaml con el nuevo tag
+                        git config --global user.name "Jenkins-Bot"
+
+                        git checkout main || git checkout -b main
+
                         sed -i 's/tag: .*/tag: "${SHORT_SHA}"/' deploy/miportfolio/values.yaml
-                        
-                        # 4. Git Add y Commit
+
                         git add deploy/miportfolio/values.yaml
                         git commit -m "chore: update image tag to ${SHORT_SHA} [skip ci]"
-                        
-                        # 5. Push (Asegúrate de tener permisos o usar el protocolo adecuado)
+
+                        # Si el checkout inicial fue por HTTPS con credenciales, 
+                        # el push debería heredar la sesión.
                         git push origin main
                     """
                 }
