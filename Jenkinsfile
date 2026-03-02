@@ -55,20 +55,21 @@ spec:
                 }
             }
         }
-
-        stage('Update Manifests') {
+stage('Update Manifests') {
             steps {
                 container('git-tool') {
                     sh """
-                        # Modificar el values.yaml con el nuevo tag
-                        # Buscamos la línea 'tag: "latest"' y la reemplazamos
+                        # 1. Solucionar el error de "dubious ownership"
+                        git config --global --add safe.directory \$(pwd)
+
+                        # 3. Modificar el values.yaml con el nuevo tag
                         sed -i 's/tag: .*/tag: "${SHORT_SHA}"/' deploy/miportfolio/values.yaml
                         
-                        # Subir el cambio al repo
+                        # 4. Git Add y Commit
                         git add deploy/miportfolio/values.yaml
                         git commit -m "chore: update image tag to ${SHORT_SHA} [skip ci]"
                         
-                        # Nota: Asegúrate de que el Jenkins tenga permisos de escritura en el repo
+                        # 5. Push (Asegúrate de tener permisos o usar el protocolo adecuado)
                         git push origin main
                     """
                 }
