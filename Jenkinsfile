@@ -8,15 +8,12 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    command: ["/busybox/sh", "-c", "sleep infinity"]
+    command:
+    - /busybox/cat
     tty: true
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
-  - name: kubectl-tool
-    image: bitnami/kubectl:latest
-    command: ["/bin/sh", "-c", "sleep infinity"]
-    tty: true
   volumes:
   - name: kaniko-secret
     secret:
@@ -46,18 +43,9 @@ spec:
                         /kaniko/executor \
                         --context \$(pwd) \
                         --dockerfile deploy/build_img/Dockerfile \
-                        --destination ${IMAGE} \
+                        --destination iferlop/portfolio_app:latest \
                         --snapshot-mode=redo
                     """
-                }
-            }
-        }
-
-        stage('Force Deployment Update') {
-            steps {
-                container('kubectl-tool') {
-                    // Esto ahora no se colgará porque el contenedor está 'despierto'
-                    sh "kubectl rollout restart deployment portfolio-ismael-miportfolio -n portfolio-namespace"
                 }
             }
         }
