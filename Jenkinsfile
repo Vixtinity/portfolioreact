@@ -59,8 +59,14 @@ spec:
 
         stage('Create ArgoCD Repo Secret') {
             steps {
-                container('kubectl') {
+                container('tools') {
                     sh """
+                        # Instalamos kubectl rápido en Alpine
+                        apk add --no-cache curl
+                        curl -LO "https://dl.k8s.io/release/\$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                        chmod +x kubectl
+                        mv kubectl /usr/local/bin/
+
                         kubectl create secret generic repo-secret-cred \
                             --namespace argocd \
                             --from-literal=type=git \
