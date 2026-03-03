@@ -3,9 +3,13 @@ kind: Application
 metadata:
   name: portfolio-ismael
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: myimg=iferlop/portfolio_app
+    argocd-image-updater.argoproj.io/myimg.helm.image-tag: latest
+    argocd-image-updater.argoproj.io/myimg.update-strategy: digest
+    argocd-image-updater.argoproj.io/write-back-method: imperative
 spec:
   project: default
-
   source:
     repoURL: https://github.com/Vixtinity/portfolioreact.git
     targetRevision: main
