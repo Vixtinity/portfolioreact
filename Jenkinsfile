@@ -46,21 +46,29 @@ spec:
             }
         }
 
-        stage('Create ArgoCD Repo Secret') {
+        stage('Update and Refresh ArgoCD') {
             steps {
                 container('tools') {
                     sh """
                         apk add --no-cache curl
-                        # Escapamos el \$ para que Groovy no se confunda
                         curl -LO "https://dl.k8s.io/release/\$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
                         chmod +x kubectl
                         mv kubectl /usr/local/bin/
 
+                        # 1. Aseguramos que el secreto del repo existe
                         kubectl create secret generic repo-secret-cred \
                             --namespace argocd \
                             --from-literal=type=git \
                             --from-literal=url=https://github.com/vixtinity/portfolioreact.git \
                             --dry-run=client -o yaml | kubectl apply -f -
+
+                        # 2. ACTUALIZACIÓN REAL: Forzamos al Deployment a usar la nueva imagen
+                        # SUSTITUYE 'portfolio-react' por el nombre de tu Deployment
+                        # SUSTITUYE 'default' por el namespace donde corre tu App
+                        kubectl set image deployment/portfolio-react portfolio-react=iferlop/portfolio_app:${env.GIT_COMMIT} --namespace default
+                        
+                        # 3. Forzar el refresco por si usas el tag 'latest'
+                        kubectl rollout restart deployment/portfolio-react --namespace default
                     """
                 }
             }
