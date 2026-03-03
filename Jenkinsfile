@@ -61,23 +61,6 @@ spec:
                         # doy permisos de ejecucion y los muevo a usr/local/bin para que este en el path
                         mv kubectl /usr/local/bin/
 
-                        # --- PASO 1: Gestión de credenciales en ArgoCD ---
-                        # Creamos un secreto con la URL de tu repo de GitHub. 
-                        # El '--dry-run=client -o yaml | kubectl apply' sirve para que, si el secreto ya existe, 
-                        # simplemente lo actualice en lugar de dar error.
-                        kubectl create secret generic repo-secret-cred \
-                            --namespace argocd \
-                            --from-literal=type=git \
-                            --from-literal=url=https://github.com/vixtinity/portfolioreact.git \
-                            --dry-run=client -o yaml | kubectl apply -f -
-
-                        # --- ACTUALIZO LA IMAGEN ---
-                        # Este es el comando clave. Le dice al Deployment: 
-                        # busca el contenedor miportfolio (kubectl get deployment portfolio-ismael-miportfolio -n portfolio-namespace -o jsonpath='{.spec.template.spec.containers[0].name}')
-                        # y cambia la imagen por la nueva.
-                        # Usamos '${env.GIT_COMMIT}' para que la imagen sea única y Kubernetes detecte el cambio.
-                        kubectl set image deployment/portfolio-ismael-miportfolio miportfolio=iferlop/portfolio_app:${env.GIT_COMMIT} --namespace portfolio-namespace
-                        
                         # --- REINICIO ---
                         # con esto fuerzo el reinicio del pod   
                         kubectl rollout restart deployment/portfolio-ismael-miportfolio --namespace portfolio-namespace
