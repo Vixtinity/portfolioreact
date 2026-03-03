@@ -13,6 +13,11 @@ spec:
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
+  - name: tools
+    image: alpine:3.18
+    command: ["/bin/sh", "-c"]
+    args: ["cat"]
+    tty: true
   volumes:
   - name: kaniko-secret
     secret:
@@ -43,18 +48,19 @@ spec:
 
         stage('Create ArgoCD Repo Secret') {
             steps {
-                container('kaniko') {
+                container('tools') {
                     sh """
-                        # Descargamos kubectl directamente en el contenedor de kaniko
-                        # Usamos la version estable de Linux amd64
-                        wget -O kubectl "https://dl.k8s.io/release/\$(wget -qO- https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                        # Instalamos kubectl en Alpine de forma ligera
+                        apk add --no-cache curl
+                        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
                         chmod +x kubectl
-                        
-                        ./kubectl create secret generic repo-secret-cred \
+                        mv kubectl /usr/local/bin/
+
+                        kubectl create secret generic repo-secret-cred \
                             --namespace argocd \
                             --from-literal=type=git \
                             --from-literal=url=https://github.com/vixtinity/portfolioreact.git \
-                            --dry-run=client -o yaml | ./kubectl apply -f -
+                            --dry-run=client -o yaml | kubectl apply -f -
                     """
                 }
             }
