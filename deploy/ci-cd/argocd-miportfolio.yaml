@@ -4,18 +4,14 @@ metadata:
   name: portfolio-ismael
   namespace: argocd
   annotations:
-    # 1. El alias es 'myimg'
+    # 1. Definimos el alias
     argocd-image-updater.argoproj.io/image-list: myimg=iferlop/portfolio_app
-    
-    # 2. TODO debe llevar el prefijo 'myimg' (antes tenías 'portfolio')
+    # 2. Usamos el MISMO alias para todo (unificamos a 'myimg')
     argocd-image-updater.argoproj.io/myimg.update-strategy: latest
     argocd-image-updater.argoproj.io/myimg.helm.image-name: image.repository
     argocd-image-updater.argoproj.io/myimg.helm.image-tag: image.tag
-    
-    # 3. Filtro para que solo acepte el HASH que sube Jenkins (hexadecimal de 40 caracteres)
+    # 3. Filtro para que solo use los hashes de Git (hexadecimal de 40 caracteres)
     argocd-image-updater.argoproj.io/myimg.allow-tags: regexp:^[0-9a-f]{40}$
-    
-    # 4. Método para que ArgoCD sobrescriba los valores sin hacer commit en Git
     argocd-image-updater.argoproj.io/write-back-method: argocd
 spec:
   project: default
