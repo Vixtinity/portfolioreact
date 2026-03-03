@@ -55,18 +55,18 @@ spec:
                         chmod +x kubectl
                         mv kubectl /usr/local/bin/
 
-                        # 1. Crear/Actualizar secreto de ArgoCD
+                        # 1. Aseguramos el secreto en ArgoCD
                         kubectl create secret generic repo-secret-cred \
                             --namespace argocd \
                             --from-literal=type=git \
                             --from-literal=url=https://github.com/vixtinity/portfolioreact.git \
                             --dry-run=client -o yaml | kubectl apply -f -
 
-                        # 2. Actualizar la imagen del Deployment de Ismael
-                        # Usamos el nombre exacto que sacamos de tu consola
-                        kubectl set image deployment/portfolio-ismael-miportfolio portfolio-ismael-miportfolio=iferlop/portfolio_app:${env.GIT_COMMIT} --namespace portfolio-namespace
+                        # 2. ACTUALIZACIÓN DEFINITIVA
+                        # Ahora que sabemos que el contenedor se llama 'miportfolio'
+                        kubectl set image deployment/portfolio-ismael-miportfolio miportfolio=iferlop/portfolio_app:${env.GIT_COMMIT} --namespace portfolio-namespace
                         
-                        # 3. Forzar el reinicio para asegurar que pilla la nueva imagen
+                        # 3. Forzar el reinicio
                         kubectl rollout restart deployment/portfolio-ismael-miportfolio --namespace portfolio-namespace
                     """
                 }
