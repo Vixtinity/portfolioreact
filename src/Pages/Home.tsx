@@ -58,7 +58,7 @@ const Home: React.FC = () => {
             </div>
             <div id="descripcion" className="md:w-1/2">
               <h2 className="text-3xl font-bold text-white mb-3">
-                <strong>Ismael Fernández LóddsdsdpeeeAAAAAAAAAAAAAeeez</strong>
+                <strong>Ismael Fernándeeeeeeeeez LóddsdsdpeeeAAAAAAAAAAAAAeeez</strong>
               </h2>
               <p className="text-lg text-white mb-4">
                 ¡Hola! Soy un adulto funcional de 0 años apasionado por la tecnología y el desarrollo web. Actualmente estoy cursando el primer año de Desarrollo de Aplicaciones Web (DAW). En este curso, he trabajado con tecnologías como HTML, CSS, Java, entre otras. A través de este portfolio, quiero mostrar mis proyectos y el progreso que voy realizando, a medida que me adentro en el mundo del desarrollo web.
