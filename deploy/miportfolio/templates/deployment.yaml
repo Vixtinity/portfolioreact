@@ -15,6 +15,7 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
+        rollout-id: {{ .Values.app.image.tag | quote }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
