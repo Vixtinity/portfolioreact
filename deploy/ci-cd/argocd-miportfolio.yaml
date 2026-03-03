@@ -5,9 +5,11 @@ metadata:
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: myimg=iferlop/portfolio_app
-    argocd-image-updater.argoproj.io/myimg.helm.image-tag: latest
-    argocd-image-updater.argoproj.io/myimg.update-strategy: digest
-    argocd-image-updater.argoproj.io/write-back-method: imperative
+    argocd-image-updater.argoproj.io/portfolio.update-strategy: latest
+    argocd-image-updater.argoproj.io/portfolio.helm.image-name: image.repository
+    argocd-image-updater.argoproj.io/myimg.helm.image-tag: image.tag
+    argocd-image-updater.argoproj.io/myimg.allow-tags: regexp:^[0-0a-f]{7,40}$
+    argocd-image-updater.argoproj.io/write-back-method: argocd
 spec:
   project: default
   source:
