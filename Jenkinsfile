@@ -13,12 +13,6 @@ spec:
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
-  - name: kubectl
-    image: bitnami/kubectl:latest
-    # Forzamos a que el contenedor se mantenga durmiendo para que Jenkins lo use
-    command: ["/bin/sh", "-c"]
-    args: ["while true; do sleep 30; done;"]
-    tty: true
   volumes:
   - name: kaniko-secret
     secret:
@@ -30,17 +24,7 @@ spec:
         }
     }
 
-    environment {
-        IMAGE = "iferlop/portfolio_app:latest"
-    }
-
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build and Push') {
             steps {
                 container('kaniko') {
@@ -59,19 +43,18 @@ spec:
 
         stage('Create ArgoCD Repo Secret') {
             steps {
-                container('tools') {
+                container('kaniko') {
                     sh """
-                        # Instalamos kubectl rápido en Alpine
-                        apk add --no-cache curl
-                        curl -LO "https://dl.k8s.io/release/\$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                        # Descargamos kubectl directamente en el contenedor de kaniko
+                        # Usamos la version estable de Linux amd64
+                        wget -O kubectl "https://dl.k8s.io/release/\$(wget -qO- https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
                         chmod +x kubectl
-                        mv kubectl /usr/local/bin/
-
-                        kubectl create secret generic repo-secret-cred \
+                        
+                        ./kubectl create secret generic repo-secret-cred \
                             --namespace argocd \
                             --from-literal=type=git \
                             --from-literal=url=https://github.com/vixtinity/portfolioreact.git \
-                            --dry-run=client -o yaml | kubectl apply -f -
+                            --dry-run=client -o yaml | ./kubectl apply -f -
                     """
                 }
             }
