@@ -4,11 +4,15 @@ metadata:
   name: portfolio-ismael
   namespace: argocd
   annotations:
+    # Definimos el alias
     argocd-image-updater.argoproj.io/image-list: myimg=iferlop/portfolio_app
-    argocd-image-updater.argoproj.io/portfolio.update-strategy: latest
-    argocd-image-updater.argoproj.io/portfolio.helm.image-name: image.repository
+    # Usamos el alias para la estrategia de actualización (DIGEST es mejor para tags fijos como latest)
+    argocd-image-updater.argoproj.io/myimg.update-strategy: digest
+    # Usamos el alias para mapear los valores de Helm
+    argocd-image-updater.argoproj.io/myimg.helm.image-name: image.repository
     argocd-image-updater.argoproj.io/myimg.helm.image-tag: image.tag
-    argocd-image-updater.argoproj.io/myimg.allow-tags: regexp:^[0-0a-f]{7,40}$
+    # Permitimos el tag latest
+    argocd-image-updater.argoproj.io/myimg.allow-tags: regexp:^latest$
     argocd-image-updater.argoproj.io/write-back-method: argocd
 spec:
   project: default
