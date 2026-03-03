@@ -43,8 +43,10 @@ spec:
                         /kaniko/executor \
                         --context \$(pwd) \
                         --dockerfile deploy/build_img/Dockerfile \
+                        --destination iferlop/portfolio_app:${env.GIT_COMMIT} \
                         --destination iferlop/portfolio_app:latest \
-                        --snapshot-mode=redo
+                        --snapshot-mode=redo \
+                        --single-snapshot
                     """
                 }
             }
