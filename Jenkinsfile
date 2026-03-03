@@ -55,20 +55,19 @@ spec:
                         chmod +x kubectl
                         mv kubectl /usr/local/bin/
 
-                        # 1. Aseguramos que el secreto del repo existe
+                        # 1. Crear/Actualizar secreto de ArgoCD
                         kubectl create secret generic repo-secret-cred \
                             --namespace argocd \
                             --from-literal=type=git \
                             --from-literal=url=https://github.com/vixtinity/portfolioreact.git \
                             --dry-run=client -o yaml | kubectl apply -f -
 
-                        # 2. ACTUALIZACIÓN REAL: Forzamos al Deployment a usar la nueva imagen
-                        # SUSTITUYE 'portfolio-react' por el nombre de tu Deployment
-                        # SUSTITUYE 'default' por el namespace donde corre tu App
-                        kubectl set image deployment/portfolio-react portfolio-react=iferlop/portfolio_app:${env.GIT_COMMIT} --namespace default
+                        # 2. Actualizar la imagen del Deployment de Ismael
+                        # Usamos el nombre exacto que sacamos de tu consola
+                        kubectl set image deployment/portfolio-ismael-miportfolio portfolio-ismael-miportfolio=iferlop/portfolio_app:${env.GIT_COMMIT} --namespace portfolio-namespace
                         
-                        # 3. Forzar el refresco por si usas el tag 'latest'
-                        kubectl rollout restart deployment/portfolio-react --namespace default
+                        # 3. Forzar el reinicio para asegurar que pilla la nueva imagen
+                        kubectl rollout restart deployment/portfolio-ismael-miportfolio --namespace portfolio-namespace
                     """
                 }
             }
