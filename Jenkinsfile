@@ -15,8 +15,9 @@ spec:
       mountPath: /kaniko/.docker
   - name: kubectl
     image: bitnami/kubectl:latest
+    # Forzamos a que el contenedor se mantenga durmiendo para que Jenkins lo use
     command: ["/bin/sh", "-c"]
-    args: ["cat"]
+    args: ["while true; do sleep 30; done;"]
     tty: true
   volumes:
   - name: kaniko-secret
@@ -58,13 +59,12 @@ spec:
 
         stage('Create ArgoCD Repo Secret') {
             steps {
-                // Ahora usamos el contenedor 'kubectl' que definimos arriba
                 container('kubectl') {
                     sh """
                         kubectl create secret generic repo-secret-cred \
                             --namespace argocd \
                             --from-literal=type=git \
-                            --from-literal=url=https://github.com/morgadodesarrollador/portfolioHelm.git \
+                            --from-literal=url=https://github.com/vixtinity/portfolioreact.git \
                             --dry-run=client -o yaml | kubectl apply -f -
                     """
                 }
