@@ -51,8 +51,8 @@ spec:
                 container('kaniko') {
                     sh """
                         /kaniko/executor \
-                        --context \$(pwd)/backend \
-                        --dockerfile Dockerfile \
+                        --context backend \
+                        --dockerfile backend/Dockerfile \
                         --destination iferlop/backend_api:${env.GIT_COMMIT} \
                         --destination iferlop/backend_api:latest \
                         --snapshot-mode=redo \
