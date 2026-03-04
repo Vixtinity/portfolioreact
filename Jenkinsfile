@@ -30,7 +30,7 @@ spec:
     }
 
     stages {
-        stage('Build and Push') {
+        stage('Build and Push Frontend') {
             steps {
                 container('kaniko') {
                     sh """
@@ -46,24 +46,34 @@ spec:
             }
         }
 
+        stage('Build and Push Backend') {
+            steps {
+                container('kaniko') {
+                    sh """
+                        /kaniko/executor \
+                        --context \$(pwd)/backend \
+                        --dockerfile backend/Dockerfile \
+                        --destination iferlop/backend_api:${env.GIT_COMMIT} \
+                        --destination iferlop/backend_api:latest \
+                        --snapshot-mode=redo \
+                        --single-snapshot
+                    """
+                }
+            }
+        }
+
         stage('Update and Refresh ArgoCD') {
             steps {
                 container('tools') {
                     sh """
-                        # instalo curl
                         apk add --no-cache curl
-                        
-                        # descargo kubectl
                         curl -LO "https://dl.k8s.io/release/\$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
                         chmod +x kubectl
-                        
-                        # doy permisos de ejecucion y los muevo a usr/local/bin para que este en el path
                         mv kubectl /usr/local/bin/
-
-                        # --- REINICIO ---
-                        # con esto fuerzo el reinicio del pod   
+                        
+                        # Reinicio ambos deployments
                         kubectl rollout restart deployment/portfolio-ismael-miportfolio --namespace portfolio-namespace
+                        kubectl rollout restart deployment/backend --namespace portfolio-namespace
                     """
                 }
             }
